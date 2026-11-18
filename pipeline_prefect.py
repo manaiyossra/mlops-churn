@@ -34,6 +34,10 @@ def _run(cmd):
 
 # ---------------------------------------------------------------- tasks : code
 @task(name="install-dependencies")
+@task(name="git-pull")
+def git_pull():
+    """Récupère la dernière version du projet depuis le dépôt Git distant."""
+    _run(["git", "pull"])
 def install_dependencies():
     """Installe les dépendances listées dans requirements.txt."""
     _run([sys.executable, "-m", "pip", "install", "-q", "-r", "requirements.txt"])
@@ -146,7 +150,8 @@ def flow_evaluate():
 
 @flow(name="all")
 def flow_all():
-    """Pipeline complet : dépendances, code, données, entraînement, évaluation."""
+    """Pipeline complet : git, dépendances, code, données, entraînement, évaluation."""
+    git_pull()
     install_dependencies()
     flow_code()
     x_train, x_test, y_train, y_test = prepare_data()
