@@ -38,6 +38,8 @@ def _run(cmd):
 def git_pull():
     """Récupère la dernière version du projet depuis le dépôt Git distant."""
     _run(["git", "pull"])
+
+
 def install_dependencies():
     """Installe les dépendances listées dans requirements.txt."""
     _run([sys.executable, "-m", "pip", "install", "-q", "-r", "requirements.txt"])
